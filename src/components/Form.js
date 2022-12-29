@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import './Form.css';
 
 function App() {
-    
+    const [clicked, setClicked] = useState(false);
     const getData = ()=>{
         let inputs = document.querySelectorAll("input");
         let button = document.querySelector("button");
-        console.log(button, inputs);
+        // console.log(button, inputs);
         
         inputs.forEach((input, index1) => {
             input.addEventListener("keyup", (e) => {
@@ -26,7 +26,6 @@ function App() {
                         if (index1 <= index2 && prevInput) {
                             input.setAttribute("disabled", true);
                             currentInput.value = "";
-                            // input.value = "";
                             prevInput.focus();
                         }
                     });
@@ -39,21 +38,27 @@ function App() {
             });
         });
         window.addEventListener("load", () => inputs[0].focus());
-        // const inputValue = document.getElementById(1).value;
-        // // const value1 = inputs[0];
-        // // const value2 = inputs[1];
-        // // const value3 = inputs[2];
-        // // const value4 = inputs[3];
-        // // console.log(value1, value2, value3, value4);
-        // button.addEventListener("click", () => console.log(inputValue));
     };
-//    const getValue = () => {
-//     
 
-//    } 
+const getValue = () => {
+    let inputs = document.querySelectorAll("input");
+    const value1 = inputs[0].value;
+    const value2 = inputs[1].value;
+    const value3 = inputs[2].value;
+    const value4 = inputs[3].value;
+    const otpVal = [value1,value2, value3, value4].join('');
+    // console.log(value1, value2, value3, value4);
+    console.log(otpVal);
+    
+}
 useEffect(()=>{
     getData();
 })
+
+useEffect(()=>{
+    getValue();
+    setClicked(false);
+},[clicked])
 
 return (
     <div className="container">
@@ -69,7 +74,7 @@ return (
         <input id="3" type="number" disabled />
         <input id="4" type="number" disabled />
         </div>
-        <button>Verify OTP</button>
+        <button onClick={()=>setClicked(true)}>Verify OTP</button>
     </form>
     </div>
 );
