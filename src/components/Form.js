@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import './Form.css';
 
-function App() {
-    const [clicked, setClicked] = useState(false);
+function Form({setGetNum}) {
+    let button = document.querySelector("button");
+    let otpVal;
+    let stOtp;
+    let stMobile;
     const getData = ()=>{
         let inputs = document.querySelectorAll("input");
-        let button = document.querySelector("button");
-        // console.log(button, inputs);
+        button = document.querySelector("button");
         
         inputs.forEach((input, index1) => {
             input.addEventListener("keyup", (e) => {
@@ -30,7 +32,7 @@ function App() {
                         }
                     });
                 }
-                if (!inputs[3].disabled && inputs[3].value !== "") {
+                if (!inputs[5].disabled && inputs[5].value !== "") {
                     button.classList.add("active");
                     return;
                 }
@@ -46,19 +48,48 @@ const getValue = () => {
     const value2 = inputs[1].value;
     const value3 = inputs[2].value;
     const value4 = inputs[3].value;
-    const otpVal = [value1,value2, value3, value4].join('');
-    // console.log(value1, value2, value3, value4);
-    console.log(otpVal);
+    const value5 = inputs[4].value;
+    const value6 = inputs[5].value;
+    otpVal = [value1,value2, value3, value4, value5, value6].join('');
+    // console.log(otpVal);
     
 }
 useEffect(()=>{
     getData();
 })
 
-useEffect(()=>{
-    getValue();
-    setClicked(false);
-},[clicked])
+const getCookie = () =>{
+    if (document.cookie.length !== 0)
+    {
+        var cookiesArray = document.cookie.split("; ");
+
+        for (var i = 0; i < cookiesArray.length; i++)
+        {
+            var nameValueArray = cookiesArray[i].split("=");
+
+            if (nameValueArray[0] === "mobileNum")
+            {
+                stMobile = nameValueArray[1];
+            }
+            else if (nameValueArray[0] === "OTP")
+            {
+                stOtp= nameValueArray[1];
+
+            }
+            if(stOtp === otpVal){
+                setGetNum(2);
+            }else{
+                setGetNum(1);
+            }
+        }
+        
+    }
+    else
+    {
+        alert("Cookies not found");
+    }
+    
+}
 
 return (
     <div className="container">
@@ -67,17 +98,24 @@ return (
     </header>
     <h4>Enter OTP Code</h4>
     <form action="#">
-    {/* <input type="number" id="number"/> */}
         <div className="input-field">
         <input id="1" type="number" />
         <input id="2" type="number" disabled />
         <input id="3" type="number" disabled />
         <input id="4" type="number" disabled />
+        <input id="5" type="number" disabled />
+        <input id="6" type="number" disabled />
         </div>
-        <button onClick={()=>setClicked(true)}>Verify OTP</button>
+        <button 
+        onClick={()=>{
+            getValue();
+            getCookie();
+        }}>
+                Verify OTP
+        </button>
     </form>
     </div>
 );
 }
 
-export default App;
+export default Form;

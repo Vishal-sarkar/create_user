@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./GetNum.css";
 
-function App({setGetNum,getPhone}) {
+function GetNum({setGetNum,getPhone}) {
   useEffect(() => {
     let input = document.querySelector("input");
     let button = document.querySelector("button");
-    // console.log(button, input.value.length);
     input.addEventListener("keyup", (e) => {
       if (input.value.length === 10) {
         button.classList.add("active");
@@ -21,7 +20,6 @@ function App({setGetNum,getPhone}) {
       </header>
       <h4>Enter Phone Number</h4>
       <form action="#">
-        {/* <input type="number" id="number"/> */}
         <div className="input-field">
           <input id="number" maxLength={10} />
         </div>
@@ -37,4 +35,4 @@ function App({setGetNum,getPhone}) {
   );
 }
 
-export default App;
+export default GetNum;
