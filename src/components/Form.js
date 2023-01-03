@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import './Form.css';
 
-function Form({setGetNum}) {
+function Form({setGetNum, checkPhone}) {
     let button = document.querySelector("button");
     let otpVal;
     let stOtp;
@@ -110,6 +110,7 @@ return (
         onClick={()=>{
             getValue();
             getCookie();
+            checkPhone(stMobile);
         }}>
                 Verify OTP
         </button>
